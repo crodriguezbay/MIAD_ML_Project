@@ -25,6 +25,13 @@ parser.add_argument(
     help='URL to be analyzed', 
     location='args')
 
+parser.add_argument(
+    'Year', 
+    type=int, 
+    required=True, 
+    help='Year', 
+    location='args')
+
 resource_fields = api.model('Resource', {
     'result': fields.String,
 })
