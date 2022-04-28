@@ -5,11 +5,14 @@ import joblib
 import sys
 import os
 
-def predict_proba(url):
+def predict_proba(url,year,mileage,state,make,model):
 
     clf = joblib.load(os.path.dirname(__file__) + '/phishing_clf.pkl') 
 
     url_ = pd.DataFrame([url], columns=['url'])
+
+    print(url)
+
   
     # Create features
     keywords = ['https', 'login', '.php', '.html', '@', 'sign']
