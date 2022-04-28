@@ -25,6 +25,13 @@ def predict_proba(url,year,mileage,state,make,model):
     url_['isIP'] = (url_.url.str.replace('.', '') * 1).str.isnumeric().astype(int)
     url_['count_com'] = url_.url.str.count('com')
 
+    print(url_.head())
+
+    # Create features
+    X = pd.DataFrame([year,mileage,state,make,model], columns=['url','year','mileage','state','make','model'])
+
+    print(X.head())
+
     # Make prediction
     p1 = clf.predict_proba(url_.drop('url', axis=1))[0,1]
 
