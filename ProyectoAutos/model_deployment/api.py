@@ -36,7 +36,7 @@ class PhishingApi(Resource):
     @api.marshal_with(resource_fields)
     def get(self):
         args = parser.parse_args()
-	    app.logger.info(args)
+        app.logger.info(args)
         
         return {
          "result": predict_proba(args['URL'])
