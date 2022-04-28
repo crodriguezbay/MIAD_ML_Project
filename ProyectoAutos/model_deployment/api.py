@@ -10,11 +10,11 @@ app = Flask(__name__)
 api = Api(
     app, 
     version='1.0', 
-    title='Phishing Prediction API',
-    description='Phishing Prediction API')
+    title='Predicción de precios de vehículos usados',
+    description='API que predice el precio de un vehiculo usado utilizando variables como: año, marca, modelo, entre otras')
 
 ns = api.namespace('predict', 
-     description='Phishing Classifier')
+     description='Predicción de precios de vehículos usados')
    
 parser = api.parser()
 
@@ -24,12 +24,40 @@ parser.add_argument(
     required=True, 
     help='URL to be analyzed', 
     location='args')
-
+    
 parser.add_argument(
     'Year', 
     type=int, 
     required=True, 
-    help='Year', 
+    help='Año', 
+    location='args')
+
+parser.add_argument(
+    'Mileage', 
+    type=float, 
+    required=True, 
+    help='Kilometraje', 
+    location='args')
+
+parser.add_argument(
+    'State', 
+    type=str, 
+    required=True, 
+    help='Estado de los EE.UU.', 
+    location='args')
+
+parser.add_argument(
+    'Make', 
+    type=str, 
+    required=True, 
+    help='Marca', 
+    location='args')
+
+parser.add_argument(
+    'Model', 
+    type=str, 
+    required=True, 
+    help='Modelo', 
     location='args')
 
 resource_fields = api.model('Resource', {
