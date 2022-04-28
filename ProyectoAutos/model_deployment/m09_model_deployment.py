@@ -28,7 +28,7 @@ def predict_proba(url,year,mileage,state,make,model):
     print(url_.head())
 
     # Create features
-    X = pd.DataFrame([year,mileage,state,make,model], columns=['url','year','mileage','state','make','model'])
+    X = pd.DataFrame([year,mileage,state,make,model], columns=['year','mileage','state','make','model'])
 
     print(X.head())
 
