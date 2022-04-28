@@ -3,6 +3,7 @@ from flask import Flask
 from flask_restplus import Api, Resource, fields
 import joblib
 from m09_model_deployment import predict_proba
+import logging
 
 app = Flask(__name__)
 
@@ -35,6 +36,7 @@ class PhishingApi(Resource):
     @api.marshal_with(resource_fields)
     def get(self):
         args = parser.parse_args()
+	    app.logger.info(args)
         
         return {
          "result": predict_proba(args['URL'])
