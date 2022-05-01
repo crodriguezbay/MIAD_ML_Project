@@ -31,8 +31,6 @@ def predict_proba(year,mileage,state,make,model):
     # Creación de lista con las variables unicas
     unique_list = [X[c].unique().tolist() for c in categorical_columns]
 
-    print(unique_list)
-
     # Creación del OneHotEncoder
     ohe = OneHotEncoder(categories=unique_list)
 
@@ -43,13 +41,15 @@ def predict_proba(year,mileage,state,make,model):
         (ohe, categorical_columns),
         ('passthrough',  categorical_mask[~categorical_mask].index.tolist()))
 
-    print(X.head())
+    print("Muestra original")
     print(X_test.head())
     X_pred = preprocess.fit_transform(X_test)
+    print("Muestra transformada")
     print(X_pred)
     
     # Make prediction
     y_pred = Reg.predict(X_pred)
+    print("Predicción del precio")
     print(y_pred)
 
     return y_pred[0]
@@ -58,7 +58,7 @@ def predict_proba(year,mileage,state,make,model):
 if __name__ == "__main__":
     
     if len(sys.argv) == 1:
-        print('Agrega los parametros necesarios')
+        print('Agrega los parámetros necesarios')
     else:
 
         year = sys.argv[1]
@@ -74,5 +74,5 @@ if __name__ == "__main__":
         print(state)
         print(make)
         print(model)
-        print('Precio del automovil: ', p1)
+        print('Precio del automóvil: ', p1)
         

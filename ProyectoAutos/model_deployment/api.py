@@ -36,7 +36,7 @@ parser.add_argument(
     'State', 
     type=str, 
     required=True, 
-    help='Estado de los EE.UU.', 
+    help='Código del Estado de los EE.UU.', 
     location='args')
 
 parser.add_argument(
