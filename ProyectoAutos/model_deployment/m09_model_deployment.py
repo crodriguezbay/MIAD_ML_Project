@@ -50,6 +50,8 @@ def predict_proba(url,year,mileage,state,make,model):
     # Creación de lista con las variables unicas
     unique_list = [X[c].unique().tolist() for c in categorical_columns]
 
+    print(unique_list)
+
     # Creación del OneHotEncoder
     ohe = OneHotEncoder(categories=unique_list)
 
