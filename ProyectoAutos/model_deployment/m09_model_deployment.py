@@ -5,11 +5,13 @@ import joblib
 import sys
 import os
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.compose import make_column_transformer
+from sklearn.preprocessing import StandardScaler
 
 def predict_proba(url,year,mileage,state,make,model):
 
     clf = joblib.load(os.path.dirname(__file__) + '/phishing_clf.pkl') 
-    xgboost = joblib.load(os.path.dirname(__file__) + '/proyecto_clf.pkl') 
+    Reg = joblib.load(os.path.dirname(__file__) + '/proyecto_clf.pkl') 
 
     url_ = pd.DataFrame([url], columns=['url'])
 
@@ -60,7 +62,7 @@ def predict_proba(url,year,mileage,state,make,model):
 
 
     X_pred = preprocess.fit_transform(X)
-    y_pred = xgboost.predict(X_pred)
+    y_pred = Reg.predict(X_pred)
 
     print(X.head())
     print(y_pred)
