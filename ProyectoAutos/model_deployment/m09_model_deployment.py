@@ -32,7 +32,7 @@ def predict_proba(url,year,mileage,state,make,model):
     print(url_.head())
 
     # Create features -----------------------------------------------------------------------------------------
-    X_test = pd.DataFrame([[year,mileage,state,make,model]], columns=['Year','Mileage','State','Make','Model'])
+    X_test = pd.DataFrame([[year,mileage,' '+state,make,model]], columns=['Year','Mileage','State','Make','Model'])
 
     #Preprocesamiento de los datos -----------------------------------------------------------------------------------
 
