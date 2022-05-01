@@ -40,6 +40,7 @@ def predict_proba(year,mileage,state,make,model):
         (StandardScaler(), ['Mileage']),
         (ohe, categorical_columns),
         ('passthrough',  categorical_mask[~categorical_mask].index.tolist()))
+    preprocess.fit_transform(X)
 
     print("Muestra original")
     print(X_test.head())
