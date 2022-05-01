@@ -60,12 +60,12 @@ def predict_proba(url,year,mileage,state,make,model):
         (ohe, categorical_columns),
         ('passthrough',  categorical_mask[~categorical_mask].index.tolist()))
 
-
-    X_pred = preprocess.fit_transform(X)
-    y_pred = Reg.predict(X_pred)
-
     print(X.head())
+    X_pred = preprocess.fit_transform(X)
     print(X_pred)
+    
+
+    y_pred = Reg.predict(X_pred)
     print(y_pred)
 
     # Make prediction
