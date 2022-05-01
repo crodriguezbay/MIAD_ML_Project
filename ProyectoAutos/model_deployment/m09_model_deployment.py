@@ -4,10 +4,12 @@ import pandas as pd
 import joblib
 import sys
 import os
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 def predict_proba(url,year,mileage,state,make,model):
 
     clf = joblib.load(os.path.dirname(__file__) + '/phishing_clf.pkl') 
+    xgboost = joblib.load(os.path.dirname(__file__) + '/proyecto_clf.pkl') 
 
     url_ = pd.DataFrame([url], columns=['url'])
 
@@ -27,10 +29,41 @@ def predict_proba(url,year,mileage,state,make,model):
 
     print(url_.head())
 
-    # Create features
+    # Create features -----------------------------------------------------------------------------------------
     X = pd.DataFrame([[year,mileage,state,make,model]], columns=['year','mileage','state','make','model'])
 
+    #Preprocesamiento de los datos -----------------------------------------------------------------------------------
+
+    # Se necesita una transformación de las variables categoricas para poder implementar 
+    # el modelo de regresión
+    dataTraining = pd.read_csv('https://raw.githubusercontent.com/albahnsen/MIAD_ML_and_NLP/main/datasets/dataTrain_carListings.zip')
+    X = dataTraining.drop(['Price'],axis=1)
+
+    # Identificación de las variables categoricas
+    categorical_mask = (X.dtypes == 'object')
+
+    # Creación de una lista con los nombres de las columnas categoricas
+    categorical_columns = X.columns[categorical_mask].tolist()
+
+    # Creación de lista con las variables unicas
+    unique_list = [X[c].unique().tolist() for c in categorical_columns]
+
+    # Creación del OneHotEncoder
+    ohe = OneHotEncoder(categories=unique_list)
+
+    # Crear el objeto para el preprocesamiento del OneHotEncoder, adicional se realiza una estandarización
+    # de la columna 'Mileage'
+    preprocess = make_column_transformer(
+        (StandardScaler(), ['Mileage']),
+        (ohe, categorical_columns),
+        ('passthrough',  categorical_mask[~categorical_mask].index.tolist()))
+
+
+    X_pred = preprocess.fit_transform(X)
+    y_pred = xgboost.predict(X_pred)
+
     print(X.head())
+    print(y_pred)
 
     # Make prediction
     p1 = clf.predict_proba(url_.drop('url', axis=1))[0,1]
