@@ -32,7 +32,7 @@ def predict_proba(url,year,mileage,state,make,model):
     print(url_.head())
 
     # Create features -----------------------------------------------------------------------------------------
-    X = pd.DataFrame([[year,mileage,state,make,model]], columns=['Year','Mileage','State','Make','Model'])
+    X_test = pd.DataFrame([[year,mileage,state,make,model]], columns=['Year','Mileage','State','Make','Model'])
 
     #Preprocesamiento de los datos -----------------------------------------------------------------------------------
 
@@ -61,7 +61,8 @@ def predict_proba(url,year,mileage,state,make,model):
         ('passthrough',  categorical_mask[~categorical_mask].index.tolist()))
 
     print(X.head())
-    X_pred = preprocess.fit_transform(X)
+    print(X_test.head())
+    X_pred = preprocess.fit_transform(X_test)
     print(X_pred)
     
 
