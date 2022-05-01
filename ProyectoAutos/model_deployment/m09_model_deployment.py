@@ -32,7 +32,7 @@ def predict_proba(url,year,mileage,state,make,model):
     print(url_.head())
 
     # Create features -----------------------------------------------------------------------------------------
-    X = pd.DataFrame([[year,mileage,state,make,model]], columns=['year','mileage','state','make','model'])
+    X = pd.DataFrame([[year,mileage,state,make,model]], columns=['Year','Mileage','State','Make','Model'])
 
     #Preprocesamiento de los datos -----------------------------------------------------------------------------------
 
@@ -62,10 +62,11 @@ def predict_proba(url,year,mileage,state,make,model):
 
 
     X_pred = preprocess.fit_transform(X)
-    y_pred = Reg.predict(X_pred)
+    #y_pred = Reg.predict(X_pred)
 
     print(X.head())
-    print(y_pred)
+    print(X_pred.head())
+    #print(y_pred)
 
     # Make prediction
     p1 = clf.predict_proba(url_.drop('url', axis=1))[0,1]
