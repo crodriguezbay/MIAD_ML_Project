@@ -19,13 +19,6 @@ ns = api.namespace('predict',
 parser = api.parser()
 
 parser.add_argument(
-    'URL', 
-    type=str, 
-    required=True, 
-    help='URL to be analyzed', 
-    location='args')
-
-parser.add_argument(
     'Year', 
     type=int, 
     required=True, 
@@ -74,7 +67,7 @@ class PhishingApi(Resource):
         app.logger.info(args)
         
         return {
-         "result": predict_proba(args['URL'],args['Year'],args['Mileage'],args['State'],args['Make'],args['Model'])
+         "result": predict_proba(args['Year'],args['Mileage'],args['State'],args['Make'],args['Model'])
         }, 200
     
     

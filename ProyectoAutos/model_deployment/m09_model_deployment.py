@@ -4,32 +4,13 @@ import pandas as pd
 import joblib
 import sys
 import os
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import StandardScaler
 
-def predict_proba(url,year,mileage,state,make,model):
+def predict_proba(year,mileage,state,make,model):
 
-    clf = joblib.load(os.path.dirname(__file__) + '/phishing_clf.pkl') 
     Reg = joblib.load(os.path.dirname(__file__) + '/proyecto_clf.pkl') 
-
-    url_ = pd.DataFrame([url], columns=['url'])
-
-    print(url)
-
-  
-    # Create features
-    keywords = ['https', 'login', '.php', '.html', '@', 'sign']
-    for keyword in keywords:
-        url_['keyword_' + keyword] = url_.url.str.contains(keyword).astype(int)
-
-    url_['lenght'] = url_.url.str.len() - 2
-    domain = url_.url.str.split('/', expand=True).iloc[:, 2]
-    url_['lenght_domain'] = domain.str.len()
-    url_['isIP'] = (url_.url.str.replace('.', '') * 1).str.isnumeric().astype(int)
-    url_['count_com'] = url_.url.str.count('com')
-
-    print(url_.head())
 
     # Create features -----------------------------------------------------------------------------------------
     X_test = pd.DataFrame([[year,mileage,' '+state,make,model]], columns=['Year','Mileage','State','Make','Model'])
@@ -67,27 +48,31 @@ def predict_proba(url,year,mileage,state,make,model):
     X_pred = preprocess.fit_transform(X_test)
     print(X_pred)
     
-
+    # Make prediction
     y_pred = Reg.predict(X_pred)
     print(y_pred)
 
-    # Make prediction
-    p1 = clf.predict_proba(url_.drop('url', axis=1))[0,1]
-
-    return p1
+    return y_pred[0]
 
 
 if __name__ == "__main__":
     
     if len(sys.argv) == 1:
-        print('Please add an URL')
-        
+        print('Agrega los parametros necesarios')
     else:
 
-        url = sys.argv[1]
+        year = sys.argv[1]
+        mileage = sys.argv[2]
+        state = sys.argv[3]
+        make = sys.argv[4]
+        model = sys.argv[5]
 
-        p1 = predict_proba(url)
-        
-        print(url)
-        print('Probability of Phishing: ', p1)
+        p1 = predict_proba(year,mileage,state,make,model)
+
+        print(year)
+        print(mileage)
+        print(state)
+        print(make)
+        print(model)
+        print('Precio del automovil: ', p1)
         
