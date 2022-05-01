@@ -43,7 +43,7 @@ def predict_proba(year,mileage,state,make,model):
 
     print("Muestra original")
     print(X_test.head())
-    X_pred = preprocess.fit_transform(X_test)
+    X_pred = preprocess.transform(X_test)
     print("Muestra transformada")
     print(X_pred)
     
