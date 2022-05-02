@@ -14,7 +14,7 @@ def predict_proba(year,mileage,state,make,model):
     Reg = joblib.load(os.path.dirname(__file__) + '/proyecto_reg.pkl') 
 
     # Create features -----------------------------------------------------------------------------------------
-    X_test = pd.DataFrame([[year,mileage,' '+state,make,model]], columns=['Year','Mileage','State','Make','Model'])
+    X_test_data = pd.DataFrame([[year,mileage,' '+state,make,model]], columns=['Year','Mileage','State','Make','Model'])
 
     #Preprocesamiento de los datos -----------------------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ def predict_proba(year,mileage,state,make,model):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
     # Identificación de las variables categoricas
-    categorical_mask = (X.dtypes == 'object')
+    categorical_mask = (X_train.dtypes == 'object')
 
     # Creación de una lista con los nombres de las columnas categoricas
     categorical_columns = X_train.columns[categorical_mask].tolist()
@@ -47,7 +47,7 @@ def predict_proba(year,mileage,state,make,model):
 
     print("Muestra original")
     print(X_test.head())
-    X_pred = preprocess.transform(X_test)
+    X_pred = preprocess.transform(X_test_data)
     print("Muestra transformada")
     print(X_pred)
     
