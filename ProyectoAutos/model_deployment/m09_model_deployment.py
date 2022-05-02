@@ -7,6 +7,7 @@ import os
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 
 def predict_proba(year,mileage,state,make,model):
 
@@ -21,6 +22,8 @@ def predict_proba(year,mileage,state,make,model):
     # el modelo de regresión
     dataTraining = pd.read_csv('https://raw.githubusercontent.com/albahnsen/MIAD_ML_and_NLP/main/datasets/dataTrain_carListings.zip')
     X = dataTraining.drop(['Price'],axis=1)
+    y = dataTraining.Price
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
     # Identificación de las variables categoricas
     categorical_mask = (X.dtypes == 'object')
@@ -40,7 +43,7 @@ def predict_proba(year,mileage,state,make,model):
         (StandardScaler(), ['Mileage']),
         (ohe, categorical_columns),
         ('passthrough',  categorical_mask[~categorical_mask].index.tolist()))
-    preprocess.fit_transform(X)
+    preprocess.fit_transform(X_train)
 
     print("Muestra original")
     print(X_test.head())
