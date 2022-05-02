@@ -10,7 +10,7 @@ from sklearn.preprocessing import StandardScaler
 
 def predict_proba(year,mileage,state,make,model):
 
-    Reg = joblib.load(os.path.dirname(__file__) + '/proyecto_clf.pkl') 
+    Reg = joblib.load(os.path.dirname(__file__) + '/proyecto_reg.pkl') 
 
     # Create features -----------------------------------------------------------------------------------------
     X_test = pd.DataFrame([[year,mileage,' '+state,make,model]], columns=['Year','Mileage','State','Make','Model'])
