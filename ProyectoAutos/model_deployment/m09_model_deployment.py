@@ -29,10 +29,10 @@ def predict_proba(year,mileage,state,make,model):
     categorical_mask = (X.dtypes == 'object')
 
     # Creación de una lista con los nombres de las columnas categoricas
-    categorical_columns = X.columns[categorical_mask].tolist()
+    categorical_columns = X_train.columns[categorical_mask].tolist()
 
     # Creación de lista con las variables unicas
-    unique_list = [X[c].unique().tolist() for c in categorical_columns]
+    unique_list = [X_train[c].unique().tolist() for c in categorical_columns]
 
     # Creación del OneHotEncoder
     ohe = OneHotEncoder(categories=unique_list)
