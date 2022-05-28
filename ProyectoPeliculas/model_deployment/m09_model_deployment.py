@@ -15,9 +15,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 def predict_proba(plot):
 
-    clf = joblib.load(os.path.dirname(__file__) + '/clf.pkl') 
-    #vect1 = joblib.load(os.path.dirname(__file__) + '/vect1.pkl') 
-    #vect_lemas = joblib.load(os.path.dirname(__file__) + '/vect_lemas.pkl') 
+    clf = joblib.load(os.path.dirname(__file__) + '/clf.pkl')
 
     # Create features -----------------------------------------------------------------------------------------
     X_test_data = pd.DataFrame([[plot]], columns=['plot'])
