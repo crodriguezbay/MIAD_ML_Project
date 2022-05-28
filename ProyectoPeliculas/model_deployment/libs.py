@@ -20,7 +20,6 @@ def clean_text(text):
 
 #Remover stopwords
 def remove_stopwords(text):
-    #nltk.download('stopwords')
     stop_words = set(stopwords.words('english'))
     no_stopword_text = [w for w in text.split() if not w in stop_words]
     return ' '.join(no_stopword_text)

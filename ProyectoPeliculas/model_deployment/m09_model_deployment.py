@@ -36,16 +36,17 @@ def predict_proba(plot):
     #Lematización
     vect = TfidfVectorizer(min_df=3)
     X_dtm = vect.fit_transform(dataTraining['clean_plot'])
+
     vect1 = TfidfVectorizer()
     vect1.fit(dataTraining['clean_plot'])
     words = list(vect1.vocabulary_.keys())[:100]
     wordnet_lemmatizer = WordNetLemmatizer()
-    #nltk.download('wordnet')
-    print([wordnet_lemmatizer.lemmatize(word,pos='v') for word in words])
+    
     def split_into_lemmas(text):
         text = text.lower()
         words = text.split()
         return [wordnet_lemmatizer.lemmatize(word) for word in words]
+    
     vect_lemas = TfidfVectorizer(analyzer=split_into_lemmas)
     X_train_l = vect_lemas.fit_transform(dataTraining['clean_plot'])
 
