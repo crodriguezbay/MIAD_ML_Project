@@ -63,15 +63,13 @@ def predict_proba(plot):
 
     #Lematización
     X_test_dtm = vect_lemas.transform(X_test_data['clean_plot'])
-
-    #X_pred = preprocess.transform(X_test_data)
-    #print("Muestra transformada")
-    #print(X_pred)
+    print("Muestra transformada---------------------------------")
+    print(X_test_dtm)
     
-    # Make prediction
-    #y_pred = Reg.predict(X_pred)
-    #print("Predicción del precio")
-    #print(y_pred)
+    # Predicción de la muestra de test
+    y_pred_test_genres = clf.predict_proba(X_test_dtm)
+    print("Predicción del género")
+    print(y_pred_test_genres)
 
     return 'Gender'
 
