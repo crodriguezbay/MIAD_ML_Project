@@ -14,7 +14,7 @@ api = Api(
     title='Clasificación de género de películas',
     description='API que predice el género de películas')
 
-ns = api.namespace('predict', 
+ns = api.namespace('classify', 
      description='Clasificación de género de películas')
    
 parser = api.parser()
