@@ -1,6 +1,9 @@
 #!/usr/bin/python
 
 import re
+from nltk.corpus import stopwords
+
+
 #Limpieza
 def clean_text(text):
     # remove backslash-apostrophe 
@@ -14,4 +17,11 @@ def clean_text(text):
     
     return text
 
-        
+#Remover stopwords
+def remove_stopwords(text):
+    nltk.download('stopwords')
+    stop_words = set(stopwords.words('english'))
+    no_stopword_text = [w for w in text.split() if not w in stop_words]
+    return ' '.join(no_stopword_text)
+  
+  
