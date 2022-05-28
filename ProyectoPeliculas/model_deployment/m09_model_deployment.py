@@ -16,7 +16,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 def predict_proba(plot):
 
     clf = joblib.load(os.path.dirname(__file__) + '/clf.pkl') 
-    vect1 = joblib.load(os.path.dirname(__file__) + '/vect1.pkl') 
+    #vect1 = joblib.load(os.path.dirname(__file__) + '/vect1.pkl') 
     #vect_lemas = joblib.load(os.path.dirname(__file__) + '/vect_lemas.pkl') 
 
     # Create features -----------------------------------------------------------------------------------------
@@ -27,6 +27,26 @@ def predict_proba(plot):
 
     #Preprocesamiento de los datos -----------------------------------------------------------------------------------
 
+    #Datos de train necesarios para limpiar y normalizar bajo los mismos parametros
+    dataTraining = pd.read_csv('https://github.com/albahnsen/MIAD_ML_and_NLP/raw/main/datasets/dataTraining.zip', encoding='UTF-8', index_col=0)
+    #Limpieza
+    dataTraining['clean_plot'] = dataTraining['plot'].apply(lambda x: clean_text(x))
+    #Remove stopwords
+    dataTraining['clean_plot'] = dataTraining['clean_plot'].apply(lambda x: remove_stopwords(x))
+    #Lematización
+    vect = TfidfVectorizer(min_df=3)
+    X_dtm = vect.fit_transform(dataTraining['clean_plot'])
+    words = list(vect1.vocabulary_.keys())[:100]
+    wordnet_lemmatizer = WordNetLemmatizer()
+    nltk.download('wordnet')
+    def split_into_lemmas(text):
+        text = text.lower()
+        words = text.split()
+        return [wordnet_lemmatizer.lemmatize(word) for word in words]
+    vect_lemas = TfidfVectorizer(analyzer=split_into_lemmas)
+    X_train_l = vect_lemas.fit_transform(dataTraining['clean_plot'])
+
+    #DATOS NUEVOS--------------------------------------------------------------------
     #Limpieza
     X_test_data['clean_plot'] = X_test_data['plot'].apply(lambda x: clean_text(x))
     print("Después de Limpieza---------------------------------")
@@ -38,14 +58,6 @@ def predict_proba(plot):
     print(X_test_data.head())
 
     #Lematización
-    words = list(vect1.vocabulary_.keys())[:100]
-    wordnet_lemmatizer = WordNetLemmatizer()
-    nltk.download('wordnet')
-    def split_into_lemmas(text):
-        text = text.lower()
-        words = text.split()
-        return [wordnet_lemmatizer.lemmatize(word) for word in words]
-    vect_lemas = TfidfVectorizer(analyzer=split_into_lemmas)
     X_test_dtm = vect_lemas.transform(X_test_data['clean_plot'])
 
     #X_pred = preprocess.transform(X_test_data)
