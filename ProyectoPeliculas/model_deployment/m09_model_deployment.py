@@ -12,7 +12,7 @@ from libs import clean_text,remove_stopwords
 
 def predict_proba(plot):
 
-    #Reg = joblib.load(os.path.dirname(__file__) + '/proyecto_reg.pkl') 
+    clf = joblib.load(os.path.dirname(__file__) + '/clf.pkl') 
 
     # Create features -----------------------------------------------------------------------------------------
     X_test_data = pd.DataFrame([[plot]], columns=['plot'])
