@@ -76,6 +76,7 @@ def predict_proba(plot):
     print(res)
 
     out = res.to_json(orient='records')[1:-1].replace('},{', '} {')
+    print(out)
 
     return out
 
