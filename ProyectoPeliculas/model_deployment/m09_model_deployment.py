@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 
 def predict_proba(plot):
 
-    Reg = joblib.load(os.path.dirname(__file__) + '/proyecto_reg.pkl') 
+    #Reg = joblib.load(os.path.dirname(__file__) + '/proyecto_reg.pkl') 
 
     # Create features -----------------------------------------------------------------------------------------
     X_test_data = pd.DataFrame([[plot]], columns=['plot'])
