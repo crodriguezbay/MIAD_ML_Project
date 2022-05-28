@@ -13,6 +13,7 @@ from libs import clean_text,remove_stopwords
 def predict_proba(plot):
 
     clf = joblib.load(os.path.dirname(__file__) + '/clf.pkl') 
+    vect_lemas = joblib.load(os.path.dirname(__file__) + '/vect_lemas.pkl') 
 
     # Create features -----------------------------------------------------------------------------------------
     X_test_data = pd.DataFrame([[plot]], columns=['plot'])
@@ -31,6 +32,8 @@ def predict_proba(plot):
     X_test_data['clean_plot'] = X_test_data['clean_plot'].apply(lambda x: remove_stopwords(x))
     print("Después de stopwords---------------------------------")
     print(X_test_data.head())
+
+    X_test_dtm = vect_lemas.transform(X_test_data['clean_plot'])
 
     #X_pred = preprocess.transform(X_test_data)
     #print("Muestra transformada")
