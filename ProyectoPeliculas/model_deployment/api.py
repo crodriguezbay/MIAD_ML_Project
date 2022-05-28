@@ -4,6 +4,7 @@ from flask_restplus import Api, Resource, fields
 import joblib
 from m09_model_deployment import predict_proba
 import logging
+import json
 
 app = Flask(__name__)
 
@@ -38,10 +39,10 @@ class GenderApi(Resource):
         args = parser.parse_args()
         app.logger.info(args)
 
-        json_data = predict_proba(args['Plot'])
+        json_object = json.loads(predict_proba(args['Plot']))
         
         return {
-         'result' : { 'p_Action' : json_data['p_Action']
+         'result' : { 'p_Action' : json_object['p_Action']
          }
         }, 200
     
