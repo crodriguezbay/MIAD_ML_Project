@@ -11,12 +11,13 @@ from sklearn.model_selection import train_test_split
 from libs import clean_text,remove_stopwords
 import nltk
 from nltk.stem import WordNetLemmatizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 def predict_proba(plot):
 
     clf = joblib.load(os.path.dirname(__file__) + '/clf.pkl') 
     vect1 = joblib.load(os.path.dirname(__file__) + '/vect1.pkl') 
-    vect_lemas = joblib.load(os.path.dirname(__file__) + '/vect_lemas.pkl') 
+    #vect_lemas = joblib.load(os.path.dirname(__file__) + '/vect_lemas.pkl') 
 
     # Create features -----------------------------------------------------------------------------------------
     X_test_data = pd.DataFrame([[plot]], columns=['plot'])
@@ -44,7 +45,7 @@ def predict_proba(plot):
         text = text.lower()
         words = text.split()
         return [wordnet_lemmatizer.lemmatize(word) for word in words]
-
+    vect_lemas = TfidfVectorizer(analyzer=split_into_lemmas)
     X_test_dtm = vect_lemas.transform(X_test_data['clean_plot'])
 
     #X_pred = preprocess.transform(X_test_data)
