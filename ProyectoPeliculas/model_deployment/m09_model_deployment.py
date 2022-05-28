@@ -42,7 +42,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 1:
         print('Agrega los parámetros necesarios')
     else:
-        plot = sys.argv[0]
+        plot = sys.argv[1]
         p1 = predict_proba(plot)
         print(plot)
         print('Género de la película', p1)
