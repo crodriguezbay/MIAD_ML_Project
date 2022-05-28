@@ -64,12 +64,11 @@ def predict_proba(plot):
     #Lematización
     X_test_dtm = vect_lemas.transform(X_test_data['clean_plot'])
     print("Muestra transformada---------------------------------")
-    print(X_test_dtm)
     
     # Predicción de la muestra de test
     y_pred_test_genres = clf.predict_proba(X_test_dtm)
     print("Predicción del género")
-    print(y_pred_test_genres)
+    #print(y_pred_test_genres)
 
     cols = ['p_Action', 'p_Adventure', 'p_Animation', 'p_Biography', 'p_Comedy', 'p_Crime', 'p_Documentary', 'p_Drama', 'p_Family',
         'p_Fantasy', 'p_Film-Noir', 'p_History', 'p_Horror', 'p_Music', 'p_Musical', 'p_Mystery', 'p_News', 'p_Romance',
@@ -79,7 +78,7 @@ def predict_proba(plot):
 
     print(res)
 
-    return 'Gender'
+    return res
 
 
 if __name__ == "__main__":
