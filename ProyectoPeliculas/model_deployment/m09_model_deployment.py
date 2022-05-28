@@ -8,6 +8,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from libs import clean_text
 
 def predict_proba(plot):
 
@@ -16,15 +17,16 @@ def predict_proba(plot):
     # Create features -----------------------------------------------------------------------------------------
     X_test_data = pd.DataFrame([[plot]], columns=['plot'])
 
-    #Preprocesamiento de los datos -----------------------------------------------------------------------------------
-
-    
-
-    
-    
-
     print("Muestra original")
     print(X_test_data.head())
+
+    #Preprocesamiento de los datos -----------------------------------------------------------------------------------
+
+    #Limpieza
+    X_test_data['clean_plot'] = X_test_data['plot'].apply(lambda x: clean_text(x))
+    print("Después de Limpieza")
+    print(X_test_data.head())
+    
     #X_pred = preprocess.transform(X_test_data)
     #print("Muestra transformada")
     #print(X_pred)
