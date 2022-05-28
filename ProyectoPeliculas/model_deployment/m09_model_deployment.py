@@ -75,10 +75,11 @@ def predict_proba(plot):
         'p_Sci-Fi', 'p_Short', 'p_Sport', 'p_Thriller', 'p_War', 'p_Western']
     
     res = pd.DataFrame(y_pred_test_genres, index=X_test_data.index, columns=cols)
-
     print(res)
 
-    return res
+    out = res.to_json(orient='records')[1:-1].replace('},{', '} {')
+
+    return out
 
 
 if __name__ == "__main__":
